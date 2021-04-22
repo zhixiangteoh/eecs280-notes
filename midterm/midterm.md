@@ -1,7 +1,6 @@
 # EECS 280 WN 2021 Midterm Learning Objectives
 
-Table of Contents:
-[toc]
+Table of Contents: GitHub now has built-in TOC on the top left of the Markdown preview.
 
 ## 1. Memory Models/Function Calls and the Stack
 
