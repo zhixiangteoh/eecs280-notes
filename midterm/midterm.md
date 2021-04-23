@@ -9,13 +9,13 @@ Table of Contents: GitHub now has built-in TOC at the top left of the Markdown p
 
 ## 1. Memory Models/Function Calls and the Stack
 
-### Understanding static, automatic/local, and dynamic storage durations
+### a. Understanding static, automatic/local, and dynamic storage durations
 
 | Static | Automatic/Local | Dynamic |
 |---|---|---|
 | This is memory that exists throughout the whole lifetime of the program (e.g. global variables) | This is what we call "local scope", i.e. memory that gets automatically assigned to (and destroyed after) the parameters and internal variables of each function on the call stack | This is memory created and destroyed by the programmer, as in `new` and `delete` |
 
-### Being able to correctly draw a memory diagram
+### b. Being able to correctly draw a memory diagram
 
 - Draw **box**, label box with **name of function**
 - Write all **parameter variables and internal variables** in the box
@@ -24,13 +24,13 @@ Table of Contents: GitHub now has built-in TOC at the top left of the Markdown p
 - For **pointers**, draw an arrow starting from inside its box to the box of the object it is pointing to
 - For **objects with value**, write the value in the box
 
-### Define the difference between a variable and an object
+### c. Define the difference between a variable and an object
 
 | Variable | Object |
 |---|---|
 | A variable is a name that refers to an object in memory. A variable exists at **compile time**. A variable is a concept associated with source code. | An object is a piece of data in memory, located at some address in memory. An object exists only at **runtime**. An object is associated with the runtime. |
 
-### Be able to define the difference between compile time and runtime
+### d. Be able to define the difference between compile time and runtime
 
 | Compile time | Runtime |
 |---|---|
@@ -38,11 +38,11 @@ Table of Contents: GitHub now has built-in TOC at the top left of the Markdown p
 
 ## 2. Testing and Procedural Abstraction
 
-### Explain the purpose of procedural abstraction and why it is valuable
+### a. Explain the purpose of procedural abstraction and why it is valuable
 
 Procedural abstraction allows a user of our API and/or functions to only need to know what our function does without needing to care about the implementation details or about how it works. It only requires that a user knows the **interface** of a function. This is good because the underlying implementation can change but the user need not concern themselves with the implementation(s) of the change.
 
-### Design/develop thorough test cases
+### b. Design/develop thorough test cases
 
 General tips for writing test cases:
 
@@ -52,7 +52,7 @@ General tips for writing test cases:
 - Test **boundary values**
 - Imagine how the function would be implemented, and come up with edge cases
 
-### Identify bugs in code and identify how to fix the bug
+### c. Identify bugs in code and identify how to fix the bug
 
 Tips:
 
@@ -68,7 +68,7 @@ Tips:
   - Always keep in mind static/dynamic type of pointer
   - If no indirection used, object slicing occurs and static type is simply the type it is sliced to
 
-### Translate problems into code (and vice versa) / Explain what a given code snippet does
+### d. Translate problems into code (and vice versa) / Explain what a given code snippet does
 
 Tips:
 - Come up with 1-2 more examples of problem to motivate a solution
@@ -77,14 +77,14 @@ Tips:
 
 ## 3. Pointers
 
-### Understand that the value of a pointer is a memory address
+### a. Understand that the value of a pointer is a memory address
 
 Tips/Notes:
 
 - In memory diagrams, essentially this means the value in the box should actually be a hexadecimal number representing the memory address of the object it is pointing to
 - Pointer arithmetic takes into account the pointer type
 
-### Use pointers to access elements within an array
+### b. Use pointers to access elements within an array
 
 Given `int arr[3][2] = { {1, 2}, {3, 4}, {5, 6} }`.
 
@@ -97,7 +97,7 @@ Some examples:
   - `*arr` == `*(arr + 0)`  == `arr[0]` yields `{1, 2}`
   - `*(arr + 2)` == `arr[2]` yields `{5, 6}`
 
-### Understand difference between traversal by pointer and traversal by index
+### c. Understand difference between traversal by pointer and traversal by index
 
 The difference is mainly in the semantics and how you achieve the same outcome.
 
@@ -129,7 +129,7 @@ for (int i = 0; i < 3; i++) {
 }
 ```
 
-### Recognize and correct common pointer errors
+### d. Recognize and correct common pointer errors
 
 Some common pointer errors:
 
@@ -139,48 +139,48 @@ Some common pointer errors:
 - Pointing to an object past the object's lifetime
   - e.g. pointing to an object in a previous function call that has concluded because of non-conformance to reference semantics (lecture notes p. 23)
 
-### Explain actions that can cause undefined behavior or runtime error (e.g. not initializing pointer)
+### e. Explain actions that can cause undefined behavior or runtime error (e.g. not initializing pointer)
 
 See notes on common pointer errors for examples and a short description/explanation.
 
 ## 4. Arrays
 
-### Be able to explain similarities and differences of traversal by index and traversal by pointers
+### a. Be able to explain similarities and differences of traversal by index and traversal by pointers
 
 | - | Traversal by index | Traversal by pointers |
 |---|---|---|
 |Similarities|Both use **pointer arithmetic** to iterate through elements|Both use **pointer arithmetic** to iterate through elements|
 |Differences|Uses an integer index to subscript the array pointer|Uses a separate pointer variable to step through array|
 
-#### Understand how arrays look in memory
+#### i. Understand how arrays look in memory
 
 Arrays are contiguous chunks of memory, at least the size of the number of elements.
 
-#### Use traversal by index
+#### ii. Use traversal by index
 
 See [similar section in Pointers](#traversal-by-index)
 
-#### Use traversal by pointer when working with arrays
+#### iii. Use traversal by pointer when working with arrays
 
 See [similar section in Pointers](#traversal-by-pointer)
 
-### Be able to explain array decay
+### b. Be able to explain array decay
 
 Arrays are objects without *value* as a whole. Array decay is when the compiler converts the array into a pointer to the first element in the array, when an array is used **in a context where a value is required**.
 
 Note: As in lecture notes, "when an array object's value is not required, it does not decay into a pointer. For example, the address-of (`&`) operator **requires** an object but not its *value* - thus, applying `&` to an array produces a pointer to the whole array, not a pointer to an individual element nor a pointer to a pointer."
 
-### Detect when array decay happens in a block of code
+### c. Detect when array decay happens in a block of code
 
 It happens generally at all times on the RHS of an assignment or expression (except for the case of `&` as noted above); more specifically in any context where a value is required.
 
-### Understand that arrays are not class-type objects and they are basically pointers
+### d. Understand that arrays are not class-type objects and they are basically pointers
 
 Class-type objects are compound objects (e.g. `struct`s and `class`es) associated with **values**, whereas arrays do not have a value as a whole.
 
 ## 5. Compound Objects and ADTs
 
-### Students should be able to define and create an ADT (e.g. define constructors properly, etc.)
+### a. Students should be able to define and create an ADT (e.g. define constructors properly, etc.)
 
 **Class-type objects** (compound objects) are objects composed of member subojects, each which may be of a different type.
 
@@ -202,7 +202,7 @@ Creating ADTs:
   - Call parent constructor somewhere in member-initializer list, preferably first
     - Lecture notes p. 93: "When creating a [child] object, the invocation of the [parent] constructor is the first thing that happens in the [child] constructor... **regardless of whether or not an explicit call** to the [parent] constructor appears, and **regardless of ordering of the member-initializer list**"
 
-#### Translate a problem into ADT
+#### i. Translate a problem into ADT
 
 Tips:
 
@@ -210,20 +210,20 @@ Tips:
 - What operations do you need to perform?
 - What can you make private (if `class`)?
 
-#### Understand motivation when using ADTs
+#### ii. Understand motivation when using ADTs
 
 This is covered in [definition of ADTs](#students-should-be-able-to-define-and-create-an-adt-eg-define-constructors-properly-etc) above.
 
-### Identify when interface has been broken
+### b. Identify when interface has been broken
 
-### Be able to use the scope resolution operator properly
+### c. Be able to use the scope resolution operator properly
 
 Use it when:
 
 - Defining class functions in separate file from header file
 - Calling function in parent class from child, i.e. `Parentclass::function_name()` (see Fall 2019 Q3)
 
-### Understand how to access members of a class type object using the dot operator
+### d. Understand how to access members of a class type object using the dot operator
 
 Given:
 
@@ -239,7 +239,7 @@ Tips:
 
 - Simply `A a;` to create an object of type `A`, then call `a.f1()`
 
-### Understand how to access members of a pointer to a class type object using the arrow operator
+### e. Understand how to access members of a pointer to a class type object using the arrow operator
 
 Always remember that arrow `->` operator is simply **dereference-then-dot**, as such: `ptr->f1()` == `(*ptr).f1()`
 
@@ -257,11 +257,11 @@ This is one of the most important tables from lecture notes:
 |Concatenate|`strcat(cstr1, cstr2)`|`str1 += str2`|
 |Compare|`!strcmp(cstr1, cstr2)`|`str1 == str2`|
 
-### Apply array operations to c-strings (indexing, dereferencing, pointer arithmetic)
+### a. Apply array operations to c-strings (indexing, dereferencing, pointer arithmetic)
 
 Concepts are similar to previously discussed in [pointers](#3-pointers).
 
-### Identify what aspects of a c-strings make it different from a *regular* array
+### b. Identify what aspects of a c-strings make it different from a *regular* array
 
 Key differences are:
 
@@ -273,11 +273,11 @@ Key differences are:
 - Printing C-style string will print all characters from pointer to current character up to but **excluding** null character
   - e.g. `cout << cstr[2];` prints `llo`
 
-#### C-strings are treated as a whole when printed as opposed to arrays printing addresses
+#### i. C-strings are treated as a whole when printed as opposed to arrays printing addresses
 
 Covered [above](#identify-what-aspects-of-a-c-strings-make-it-different-from-a-regular-array).
 
-#### Null character is not part of length of c-string but included as an element of the underlying array
+#### ii. Null character is not part of length of c-string but included as an element of the underlying array
 
 This one is important.
 
@@ -287,7 +287,7 @@ char cstr[] = "hello";
 cout << strlen(cstr) << endl; // prints 5, NOT 6!
 ```
 
-### Understand the null terminating character
+### c. Understand the null terminating character
 
 One important fact about the null terminating character is that it is **falsy**, i.e. evaluates to `false` in a boolean expression. That is why a very handy way to iterate characters of a C-style string by pointer is as such:
 
@@ -301,15 +301,15 @@ while (*cstr) {
 cout << endl; // prints hello
 ```
 
-#### Must be at the end of all c-strings for them to be valid
+#### i. Must be at the end of all c-strings for them to be valid
 
 If the null terminating character `'\0'` is not used to terminate a user-defined char array, then it is not a valid C string and using it as one can lead to undefined behavior.
 
-#### Causes c-strings to stop printing to cout
+#### ii. Causes c-strings to stop printing to cout
 
 Covered [above](#identify-what-aspects-of-a-c-strings-make-it-different-from-a-regular-array).
 
-### Develop code making use of cstring library functions to perform operations on C-Style strings (including strlen, strcmp, etc.)
+### d. Develop code making use of cstring library functions to perform operations on C-Style strings (including strlen, strcmp, etc.)
 
 For C-style strings, you should use traversal by pointer because you don't know the size or length of the C-string before you iterate through it at least once. I generally like to use the traversing scheme discussed above in all such questions requiring performing operations on C-style strings:
 
@@ -323,13 +323,13 @@ while (*cstr) { // *cstr != '\0'
 }
 ```
 
-### Explain the difference between C-Style and C++-Style strings
+### e. Explain the difference between C-Style and C++-Style strings
 
 This is covered in the [table](#6-strings) at the start of this section.
 
 ## 7. Streams and I/O
 
-### Develop programs that make use of command line arguments
+### a. Develop programs that make use of command line arguments
 
 Structure of command line arguments:
 
@@ -339,7 +339,7 @@ Structure of command line arguments:
    argv[0]     argv[1] argv[2] argv[3] ...
 ```
 
-### Explain how command line arguments relate to the argc and argv parameters of main
+### b. Explain how command line arguments relate to the argc and argv parameters of main
 
 For a `main` defined as such:
 
@@ -353,7 +353,7 @@ int main(int argc, char *argv[]) {
 
 `argv` is a 2D C-style string array whose rows correspond to the separate command-line string arguments. Note that every command line argument is read in to `main` as a C-style string, so you need to use `atoi()` to parse an integer read in as a command line argument. `stoi()` is to parse an integer from a C++ string.
 
-### Be able to use input and output streams to access data in files
+### c. Be able to use input and output streams to access data in files
 
 Some quick notes:
 
@@ -396,7 +396,7 @@ int main(int argc, char *argv[]) {
 }
 ```
 
-#### Be able to check if the input/output stream was opened successfully
+#### i. Be able to check if the input/output stream was opened successfully
 
 Example:
 
@@ -408,20 +408,19 @@ if (!fin.is_open()) {
 }
 ```
 
-
 ## 8. `const`
 
-### Explain why `const` is used and how it modifies interactions with a variable
+### a. Explain why `const` is used and how it modifies interactions with a variable
 
 One of the benefits of using `const` is to prevent modifications to data that should not be modified when accomplishing certain tasks, e.g. printing a compound object's name should not need to modify the name variable, printing a company's quarterly earnings should not be able to modify the earnings variable, which could otherwise be catastrophic.
 
-### Identify conversions between `const` and non-`const` types that would cause compile errors
+### b. Identify conversions between `const` and non-`const` types that would cause compile errors
 
 Essentially any conversion that produces a **new** way to modify a `const` object will cause compile errors. Lecture notes p. 51:
 
 "The general rule for converting between const and non-const is that the conversion **must not enable modifications that are prohibited without the conversion.**"
 
-### Distinguish between a `const` pointer and a pointer-to-`const`
+### c. Distinguish between a `const` pointer and a pointer-to-`const`
 
 A `const` pointer is a pointer that will always point the same memory address, i.e. the value of the pointer can't be reassigned:
 
@@ -444,7 +443,7 @@ a = 10; // OK
 
 ## 9. Inheritance
 
-### Understand “is-a” relationship between a data type that inherits from another data type
+### a. Understand “is-a” relationship between a data type that inherits from another data type
 
 Example: `Chicken` is-a `Bird` because `Chicken` inherits all *visible/accessible* members of `Bird`. 
 
@@ -452,15 +451,15 @@ In memory, a `Chicken` compound object will contain member objects in `Bird`, bu
 
 ![Chicken is-a Bird](./media/Chicken_is-a_Bird.png)
 
-### Identify “is-a” relationships when given two or more data types
+### b. Identify “is-a” relationships when given two or more data types
 
 First think intuitively, then look at other information given. Should generally be intuitive.
 
-### Be able to differentiate between “is-a” (inheritance) and “has-a” (composition) relationships
+### c. Be able to differentiate between “is-a” (inheritance) and “has-a” (composition) relationships
 
 Covered [above](#understand-is-a-relationship-between-a-data-type-that-inherits-from-another-data-type).
 
-### Understand access modifiers (public, private, protected)
+### d. Understand access modifiers (public, private, protected)
 
 `public`: accessible by all outside code.
 
@@ -470,7 +469,7 @@ Covered [above](#understand-is-a-relationship-between-a-data-type-that-inherits-
 
 Note: using `protected` is generally not good design, because often these member variables are implementation details, and making it protected exposes these details to the derived classes, when they could be contained fully within the class.
 
-### Understand the order in which base class constructors and destructors are called in derived types
+### e. Understand the order in which base class constructors and destructors are called in derived types
 
 Remember: socks-and-shoes analogy
 
@@ -482,7 +481,7 @@ The reverse is true for destructor ordering, i.e. the *most* derived class objec
 
 ## 10. Polymorphism
 
-### Understand name lookup process
+### a. Understand name lookup process
 
 Made a [video](https://www.youtube.com/watch?v=Z8uqeNnPCCY&ab_channel=zhixiangteoh) on this for my IA application. [Slides](./media/C++_Member_Lookup_Process.pdf).
 
@@ -499,7 +498,7 @@ Summary:
   - If a function of the same signature exists in the dynamic type, it is called.
     - If not, the base class is considered, repeating until the *most* base class
 
-### Identify implicit downcasts and understand why they are prohibited
+### b. Identify implicit downcasts and understand why they are prohibited
 
 Examples:
 
@@ -512,7 +511,7 @@ Chicken *chicken_ptr = bird_ptr; // implicit downcast
 
 C++ prohibits implicit downcasts because `bird_ref` and `bird_ptr` **can** be pointing to `Bird` objects, regardless of what they actually are pointing to, so the conversion is **unsafe**.
 
-### Be able to identify overloaded functions
+### c. Be able to identify overloaded functions
 
 Functions with same name but different signatures.
 
@@ -525,7 +524,7 @@ void f1(int n) const {}
 
 The two functions above have different signatures, so `f1` is overloaded.
 
-### Be able to identify overridden functions
+### d. Be able to identify overridden functions
 
 This occurs when a member function in a derived class has the same signature as the corresponding member function in the base class, and the function has been defined as virtual in the base class:
 
@@ -543,19 +542,19 @@ class Derived : public Base {
 
 The `virtual` and `override` keywords are optional in the derived class; unless its own derived class needs to override its function, then it requires `virtual` just like a regular base class.
 
-### Understand what characterizes an overloaded function and construct one given a description of what it should do
+### e. Understand what characterizes an overloaded function and construct one given a description of what it should do
 
 Covered [above](#be-able-to-identify-overloaded-functions).
 
-### Understand what characterizes an overridden function and construct one given a description of what it should do
+### f. Understand what characterizes an overridden function and construct one given a description of what it should do
 
 Covered [above](#be-able-to-identify-overridden-functions).
 
-### Understand why we can construct a base class pointer and assign it to the address of a derived class object
+### g. Understand why we can construct a base class pointer and assign it to the address of a derived class object
 
 This is an implicit upcast, and it is allowed because it is safe and we are not risking losing any information.
 
-### Understand why we use abstract classes and interfaces and how to use them
+### h. Understand why we use abstract classes and interfaces and how to use them
 
 Reasons for abstract classes (from lecture notes p. 105):
 
@@ -563,11 +562,11 @@ Reasons for abstract classes (from lecture notes p. 105):
 
 Similarly, an interface is just an abstract class but with only all pure virtual functions. Hence it provides no implementation, but its purpose is to define the member functions that are to be overridden by its derived classes, serving as an "interface" (for procedural abstraction), exactly as its name suggests.
 
-#### Be able to identify an abstract class
+#### i. Be able to identify an abstract class
 
 Contains at least one [pure virtual function](#be-able-to-identify-an-interface), but not all functions.
 
-#### Be able to identify an interface
+#### ii. Be able to identify an interface
 
 All functions are pure virtual, i.e. no implementation (indicated by syntactic `= 0`):
 
@@ -575,11 +574,11 @@ All functions are pure virtual, i.e. no implementation (indicated by syntactic `
 virtual some_func(int n) = 0;
 ```
 
-#### Identify pure virtual functions and understand that they make the class abstract
+#### iii. Identify pure virtual functions and understand that they make the class abstract
 
 Covered [above](#be-able-to-identify-an-abstract-class).
 
-#### Be able to write a pure virtual function
+#### iv. Be able to write a pure virtual function
 
 ```cpp
 class Interface {
@@ -591,25 +590,25 @@ public:
 }
 ```
 
-#### Be able to explain that abstract classes cannot be instantiated, but that abstract class pointers can exist
+#### v. Be able to explain that abstract classes cannot be instantiated, but that abstract class pointers can exist
 
 The header says it.
 
-### Be able to use the ‘virtual’ keyword properly and explain what the ‘virtual’ keyword achieves
+### i. Be able to use the ‘virtual’ keyword properly and explain what the ‘virtual’ keyword achieves
 
 The `virtual` keyword allows dynamic binding in member lookup by allowing derived classes to override the base class implementation, i.e. the runtime starts at the dynamic type of a pointer in determining which function to use, if it is overridden.
 
-### Be able to use the ‘override’ keyword properly and explain what the ‘override’ keyword achieves
+### j. Be able to use the ‘override’ keyword properly and explain what the ‘override’ keyword achieves
 
 The `override` keyword is used in a derived class, mainly as a sanity check to ensure that the programmer does not unintentionally change the signature of a function meant to be overridden.
 
 Using an `override` keyword will cause the compiler to throw a warning, helping the programmer debug such mistakes that otherwise would have been deemed acceptable by the compiler and lead to unexpected behavior.
 
-### Understand the name lookup process for dynamic binding
+### k. Understand the name lookup process for dynamic binding
 
 Covered [above](#understand-name-lookup-process).
 
-### Know what conditions must be necessary for dynamic binding to work and how to implement them
+### l. Know what conditions must be necessary for dynamic binding to work and how to implement them
 
 Conditions necessary:
 
@@ -618,6 +617,6 @@ Conditions necessary:
 - **Indirection** used (and no illegal downcasts)
 - Optional: `override` keyword
 
-### Understand why we use factory pattern and why it works
+### m. Understand why we use factory pattern and why it works
 
 Factory pattern creates and returns **pointers** to derived classes, hence uses indirection and does not commit object slicing in the implicit upcast to a Base class pointer. The Base class is defined, with `virtual` keywords for some (or all) functions, with or without implementations, and the derived classes created by factory overrides with their specific implementations at runtime, with dynamic binding.
