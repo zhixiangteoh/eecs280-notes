@@ -493,7 +493,13 @@ Then look at the root, its children, and in some rare cases, their children. If 
 ### d. Be able to use a linked list iterator
 
 ### e. Be able to define friend classes
-
+If a class such as an iterator is created for another class such as a list, adding the following friend declaration:
+```cpp
+class Iterator {
+private:
+    friend class BinarySearchTree;
+```
+Will allow the List to access the Iterator's private variables, but it will not work vice versa. Friendship is given not taken. 
 ### f. Be able to use friend classes
 
 ### g. Be able to add and delete nodes into the linked list without creating any memory errors
@@ -511,6 +517,7 @@ Then look at the root, its children, and in some rare cases, their children. If 
 ### a. Be able to identify common characteristics of impostor syndrome
 
 ### b. Be able to identify steps that can be taken to overcome impostor syndrome
+![image](https://user-images.githubusercontent.com/73956110/116013804-03450d80-a600-11eb-8251-efe6b4ea823d.png)
 
 ### c. Understand that most individuals feel imposter syndrome at some points in their careers
 
