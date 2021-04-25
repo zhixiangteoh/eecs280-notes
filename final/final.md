@@ -7,6 +7,11 @@ This document contains student-written responses to Sections 11-19 of the learni
 
 Table of Contents: GitHub now has built-in TOC at the top left of the Markdown preview.
 
+#### Quick Reference for Big O Notation:
+![image](https://user-images.githubusercontent.com/73956110/116013449-3b4b5100-a5fe-11eb-93e7-e3293dbfce91.png)
+![image](https://user-images.githubusercontent.com/73956110/116013477-5fa72d80-a5fe-11eb-8a87-5f4aab04c1bd.png)
+
+
 ## 11. Dynamic Memory
 
 ### a. Understand the difference between the stack and the heap
@@ -49,7 +54,7 @@ According to lecture notes pg. 133, `new` does:
 
 ### f. Know when the delete operator should be used and how to use it
 
-`delete` does not kill the pointer object; it follows the pointer to the object it is pointing to, and kills that object. After using `delete`, if your pointer variable does not go out of scope immediately, set it to `nullptr`, e.g.,
+`delete` does not kill the pointer object; it follows the pointer to the object it is pointing to, and kills that object. After using `delete`, if your pointer variable does not go out of scope immediately, set it to `nullptr`, e.g., (After deletion the pointer may still be reused to point to another object) If the pointer is not set to nullptr it becomes a dangling ptr.
 
 ```cpp
 int main() {
@@ -396,9 +401,20 @@ IntSet IntSet::operator+(const IntSet &rhs) const {
 
 ### a. Be able to identify recursion, tail recursion, tree recursion, and structural recursion problems
 
+Recursion is when a function calls itself by taking a "recursive leap of faith" until it reaches a base case.
+
+Linear recursion would mean that at most only one recursive call is made in each invocation of the function. Keep note that this does not mean that there is only one call in the body, as there could be an if else statement which determines which call to make.
+
+Tail recursion is when the recursive call is the last call made in the function. All of the work must be done in the active flow before the call takes place.
+
+Tree recursion is if a single invocation of the function can make more than one recursive call. Such a function subdivides a recursive case into multiple subproblems.
+
 ### b. Be able to write a recursive function given a problem
 
 #### i. Break down problem into smaller sub-problems
+
+First identify the base case. ex. What if there is no root to start off? What if the node parameter is a nullptr?
+Then look at the root, its children, and in some rare cases, their children. If you need to go too far down the tree in your implementation, something is wrong.
 
 ### c. Understand how to write a structural recursive function
 
