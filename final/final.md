@@ -294,14 +294,14 @@ Assuming sets implemented using **dynamic arrays**:
 
 ||`insert`|`find`|`remove`|
 |-|-|-|-|
-|Sorted Set| $O(N)$ | $O(\log_2N)$ | $O(N)$ |
-|Unsorted Set| $O(1)$ | $O(N)$ | $O(1)$ |
+|Sorted Set| O(N) | O(logN) | O(N) |
+|Unsorted Set| O(N) | O(N) | O(N) |
 
 Assuming sets implemented using (relatively balanced) **binary search trees**:
 
 ||`insert`|`find`|`remove`|
 |-|-|-|-|
-|Sorted Set| $O(\log_2N)$ | $O(\log_2N)$ | $O(1)$ |
+|Sorted Set| O(logN) | O(logN) | O(logN) |
 
 ### b. Be able to explain an advantage of using templates when defining the interface for a container
 
@@ -396,29 +396,121 @@ IntSet IntSet::operator+(const IntSet &rhs) const {
 
 ### a. Be able to identify recursion, tail recursion, tree recursion, and structural recursion problems
 
+Telling signs: **data structure is recursive**; e.g., sequential lists, trees
+
+|Linear Recursion|Tail Recursion|Tree Recursion|Structural Recursion|
+|-|-|-|-|
+|Each function call makes at most one recursive call. $O(N)$ time complexity, $O(N)$ space complexity (worst-case)|Linear Recursive *and* return statement does no work except invokes recursive call. $O(N)$ time, $O(1)$ space|Each function call makes more than one recursive call(s). $O(k^N)$ time where $k$ is number of calls per recursion, $O(N)$ space (because any branch has to return before the next recursive branch is "invoked")|Basically any data structure that is recursively defined, e.g. Lists, Trees|
+
 ### b. Be able to write a recursive function given a problem
 
+Identify:
+
+- Base case(s): Usually the smallest problem (smallest size of data structure)
+- Recurrence relation: Split problem into subproblem, progressively **getting closer to base case**
+
 #### i. Break down problem into smaller sub-problems
+
+Interesting examples (lecture notes pgs. 224-227):
+
+Pancake Sort:
+
+- Base case: 0 or 1 pancake
+- Recurrence relation (n pancakes):
+  - Spatula under nth largest pancake and flip, moving it to the top
+  - Flip whole stack, so that nth largest pancake at bottom
+  - Call pancake sort on (n-1) pancakes
+
+Towers of Hanoi (I personally find this the most intriguing and best representation of "recursive leap of faith"):
+- Base case: 1 disk, move directly to target rod
+- Recurrence relation (n disks):
+  - Call towers of hanoi on (n-1) disks, with **target rod set as temporary rod**
+  - Move base (nth largest) disk to target rod
+  - Call towers of hanoi on (n-1) disks to target rod (from temporary rod), on top of base disk
+
+> Note: the coolest thing to me about this recurrence relation is that all we needed to care about was changing our "start", "temp", and "target" rods, and then just take the *recursive leap of faith*. I don't believe that the recursive leap of faith is "magic", because behind the "magic" is intricate details that can be proven mathematically and logically. In this case of Towers of Hanoi, the intricate detail is that the target rod differs across *subproblems*, so we are not *exactly* solving the *same* problem on a smaller n; i.e., "solving" the (n-1) subproblem in this case moves (n-1) disks to the temp rod (such that the "temp" rod parameter in the (n-1) call is the target rod), not the target rod. You can think of it as rearranging the rods for each subproblem.
 
 ### c. Understand how to write a structural recursive function
 
 ### i. Break down data structures into smaller data structures
 
+Example (calculating length of linked list):
+
+```cpp
+template <typename T>
+int length_list(List<T>::Iterator it) {
+    if (!(*list)) {
+        return 0;
+    }
+    return 1 + length_list(++it); // essentially a smaller linked list
+}
+
+int main() {
+    // assume list: {1,2,3,4,5}
+    cout << length_list(list.begin()) << endl; // prints 5
+    return 0;
+}
+```
+
+Example (calculating height of BST):
+
+```cpp
+int height_bst(Node *node) {
+    if (!node) {
+        return 0;
+    }
+    return 1 + max(height_bst(node->left), height_bst(node->right))
+    // node->left, node->right are smaller BSTs
+}
+```
+
 ### d. Be able to write an appropriate base case given a problem
+
+Covered above.
 
 ### e. Be able to differentiate between the memory complexity of normal linear recursive functions and tail recursive functions
 
+Covered [above](#a-be-able-to-identify-recursion-tail-recursion-tree-recursion-and-structural-recursion-problems).
+
 ### f. Be able to draw a memory diagram of the stack given a recursive function call
+
+Follow the details here as in this example (pg. 202):
+
+![Memory diagram recursion](./media/memory_diagram_recursion.png)
 
 ### g. Convert iteration into recursion and recursion into iteration
 
+Iteration to recursion:
+
+- Convert all the work done with each loop to instructions in active flow (i.e. before invoking recursive call)
+- Invoke recursive call after work done in each loop
+
+Recursion to iteration:
+- If tail-recursive, do reverse of above
+- If not tail-recursive, use a data structure to mimic call stack, or to store necessary data needed when transitioning between recursive calls
+
 ### h. Understand when to use recursion vs. iteration
+
+This is most likely an implementation question, i.e. tests if you know how to use the right techniques to solve a given problem.
+
+For a conceptual response (lecture notes pg. 207-208):
+
+||Recursion|Iteration|
+|-|-|-|
+|Similarities|Same computational power, iterative algorithm can be converted to tail-recursive algorithm and vice-versa||
+|Differences|Can store data in multiple activation records|Only has a single activation record to work with, would need explicit data structure to store its data|
 
 ## 15. BSTs
 
 ### a. Be able to identify the difference in time complexities between removing, inserting, and finding an item in a BST vs an Unsorted Set and a Sorted Set
 
 #### i. Best case, worst case, and average case
+
+||`insert`|`find`|`remove`|
+|-|-|-|-|
+|Sorted Set| O(N) (check if exists), O(N) (front), O(N) | O(1), O(logN) (binary search), O(logN) | O(1) (first index), O(N), O(N) |
+|Unsorted Set| O(N) (check if exists), O(N), O(N) | O(1), O(N), O(N) | O(1) (first index), O(N), O(N) |
+|BST| O(1), O(logN), O(logN) | O(1), O(logN), O(logN) | O(logN), O(logN), O(logN) |
 
 ### b. Be able to draw a BST representation in memory with pointers
 
