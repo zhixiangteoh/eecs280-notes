@@ -7,6 +7,11 @@ This document contains student-written responses to Sections 11-19 of the learni
 
 Table of Contents: GitHub now has built-in TOC at the top left of the Markdown preview.
 
+#### Quick Reference for Big O Notation:
+
+![image](https://user-images.githubusercontent.com/73956110/116013449-3b4b5100-a5fe-11eb-93e7-e3293dbfce91.png)
+![image](https://user-images.githubusercontent.com/73956110/116013477-5fa72d80-a5fe-11eb-8a87-5f4aab04c1bd.png)
+
 ## 11. Dynamic Memory
 
 ### a. Understand the difference between the stack and the heap
@@ -49,7 +54,7 @@ According to lecture notes pg. 133, `new` does:
 
 ### f. Know when the delete operator should be used and how to use it
 
-`delete` does not kill the pointer object; it follows the pointer to the object it is pointing to, and kills that object. After using `delete`, if your pointer variable does not go out of scope immediately, set it to `nullptr`, e.g.,
+`delete` does not kill the pointer object; it follows the pointer to the object it is pointing to, and kills that object. After using `delete`, if your pointer variable does not go out of scope immediately, set it to `nullptr`, e.g., (After deletion the pointer may still be reused to point to another object) If the pointer is not set to nullptr it becomes a dangling ptr.
 
 ```cpp
 int main() {
@@ -401,6 +406,13 @@ Telling signs: **data structure is recursive**; e.g., sequential lists, trees
 |Linear Recursion|Tail Recursion|Tree Recursion|Structural Recursion|
 |-|-|-|-|
 |Each function call makes at most one recursive call. $O(N)$ time complexity, $O(N)$ space complexity (worst-case)|Linear Recursive *and* return statement does no work except invokes recursive call. $O(N)$ time, $O(1)$ space|Each function call makes more than one recursive call(s). $O(k^N)$ time where $k$ is number of calls per recursion, $O(N)$ space (because any branch has to return before the next recursive branch is "invoked")|Basically any data structure that is recursively defined, e.g. Lists, Trees|
+Recursion is when a function calls itself by taking a "recursive leap of faith" until it reaches a base case.
+
+Linear recursion would mean that at most only one recursive call is made in each invocation of the function. Keep note that this does not mean that there is only one call in the body, as there could be an if else statement which determines which call to make.
+
+Tail recursion is when the recursive call is the last call made in the function. All of the work must be done in the active flow before the call takes place.
+
+Tree recursion is if a single invocation of the function can make more than one recursive call. Such a function subdivides a recursive case into multiple subproblems.
 
 ### b. Be able to write a recursive function given a problem
 
@@ -429,6 +441,9 @@ Towers of Hanoi (I personally find this the most intriguing and best representat
   - Call towers of hanoi on (n-1) disks to target rod (from temporary rod), on top of base disk
 
 > Note: the coolest thing to me about this recurrence relation is that all we needed to care about was changing our "start", "temp", and "target" rods, and then just take the *recursive leap of faith*. I don't believe that the recursive leap of faith is "magic", because behind the "magic" is intricate details that can be proven mathematically and logically. In this case of Towers of Hanoi, the intricate detail is that the target rod differs across *subproblems*, so we are not *exactly* solving the *same* problem on a smaller n; i.e., "solving" the (n-1) subproblem in this case moves (n-1) disks to the temp rod (such that the "temp" rod parameter in the (n-1) call is the target rod), not the target rod. You can think of it as rearranging the rods for each subproblem.
+
+First identify the base case; e.g., What if there is no root to start off? What if the node parameter is a nullptr?
+Then look at the root, its children, and in some rare cases, their children. If you need to go too far down the tree in your implementation, something is wrong.
 
 ### c. Understand how to write a structural recursive function
 
@@ -570,6 +585,17 @@ For a conceptual response (lecture notes pg. 207-208):
 
 ### e. Be able to define friend classes
 
+If a class such as an iterator is created for another class such as a list, adding the following friend declaration:
+
+```cpp
+
+class Iterator {
+  private:
+    friend class BinarySearchTree;
+```
+
+will allow the List to access the Iterator's private variables, but it will not work vice versa. Friendship is given not taken.
+
 ### f. Be able to use friend classes
 
 ### g. Be able to add and delete nodes into the linked list without creating any memory errors
@@ -587,6 +613,7 @@ For a conceptual response (lecture notes pg. 207-208):
 ### a. Be able to identify common characteristics of impostor syndrome
 
 ### b. Be able to identify steps that can be taken to overcome impostor syndrome
+![image](https://user-images.githubusercontent.com/73956110/116013804-03450d80-a600-11eb-8251-efe6b4ea823d.png)
 
 ### c. Understand that most individuals feel imposter syndrome at some points in their careers
 
